@@ -1,3 +1,4 @@
+import { isBuffer } from 'lodash';
 import postApi from './api/postApi';
 import { initPagination, initSearchInput, renderPostList, renderPagination, toast } from './utils';
 
@@ -34,6 +35,7 @@ function registerPostDeleteEvent() {
       const btnRemove = document.querySelector('[data-id="remove"]');
       if (!btnRemove) return;
       btnRemove.addEventListener('click', function (e) {
+        console.log('btn remove');
         e.preventDefault();
         const modal = document.getElementById('deleteModal');
         if (!modal) return;
@@ -48,19 +50,17 @@ function registerPostDeleteEvent() {
       });
       const post = e.detail;
       const btnYes = document.querySelector('.modal-footer .yes');
-      if (!btnYes) return;
+      // if (!btnYes) return;
       btnYes.addEventListener('click', async function (e) {
         e.preventDefault();
         console.log(e);
         await postApi.remove(post.id);
         await handleFilterChange();
+        const modal = document.getElementById('deleteModal');
+        if (!modal) return;
+        modal.style.display = 'none';
         toast.success('Remove post successfully');
       });
-      // btnYes.addEventListener('click', (e) => {
-      //
-      //
-      //
-      // });
     } catch (error) {
       console.log('failed to remove post', error);
       toast.error(error.message);
@@ -96,10 +96,11 @@ function registerPostDeleteEvent() {
     //render post list based on params
     // const queryParams = new URLSearchParams(window.location.search);
 
-    const { data, pagination } = await postApi.getAll(queryParams);
+    // const { data, pagination } = await postApi.getAll(queryParams);
 
-    renderPostList(data);
-    renderPagination('pagination', pagination);
+    // renderPostList(data);
+    // renderPagination('pagination', pagination);
+    handleFilterChange();
   } catch (error) {
     console.log('get all failed', error);
   }
