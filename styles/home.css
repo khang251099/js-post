@@ -17,7 +17,7 @@
   overflow: hidden;
 }
 .posts-section .post-item .card-img-top {
-  /* height: 200px; */
+  height: 200px;
   width: auto;
   transition: all 0.5s;
 }
@@ -100,3 +100,8 @@
 .posts-nav .page-item:not(.active) .page-link:hover {
   color: var(--primary-color);
 }
+
+.nav-link{
+  color:red !important;
+}
+

@@ -73,3 +73,8 @@ ul {
   height: 40px;
   width: auto;
 }
+
+
+.invalid-feedback.active{
+  display:block;
+}
