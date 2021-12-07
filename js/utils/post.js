@@ -52,18 +52,15 @@ export function createPostElement(post) {
   const removeButton = liElement.querySelector('[data-id="remove"]');
   if (!removeButton) return;
   removeButton.addEventListener('click', (e) => {
-    e.preventDefault();
-
+    const modal = document.getElementById('deleteModal');
+    if (!modal) return;
+    modal.style.display = 'block';
     const customEvent = new CustomEvent('post-delete', {
       bubbles: true,
       detail: post,
     });
     removeButton.dispatchEvent(customEvent);
   });
-
-  // const modal = document.getElementById('deleteModal');
-  // console.log(modal);
-  // const button
   return liElement;
 }
 

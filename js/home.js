@@ -1,4 +1,4 @@
-import { isBuffer } from 'lodash';
+// import { isBuffer } from 'lodash';
 import postApi from './api/postApi';
 import { initPagination, initSearchInput, renderPostList, renderPagination, toast } from './utils';
 
@@ -24,23 +24,18 @@ async function handleFilterChange(filterName, filterValue) {
   //re-render postList
 }
 
-function handleNoButton() {
-  console.log(btnNo);
-}
 function registerPostDeleteEvent() {
   document.addEventListener('post-delete', async function (e) {
     //call api to remove post id
     //fetch data
     try {
       const btnRemove = document.querySelector('[data-id="remove"]');
-      if (!btnRemove) return;
-      btnRemove.addEventListener('click', function (e) {
-        console.log('btn remove');
-        e.preventDefault();
-        const modal = document.getElementById('deleteModal');
-        if (!modal) return;
-        modal.style.display = 'block';
-      });
+      console.log(btnRemove);
+      // btnRemove.addEventListener('click', function (e) {
+      //   console.log('btn remove');
+      //   e.preventDefault();
+
+      // });
       const btnNo = document.querySelector('.modal-footer .no');
       btnNo.addEventListener('click', (e) => {
         e.preventDefault();
@@ -50,16 +45,16 @@ function registerPostDeleteEvent() {
       });
       const post = e.detail;
       const btnYes = document.querySelector('.modal-footer .yes');
-      // if (!btnYes) return;
+      if (!btnYes) return;
       btnYes.addEventListener('click', async function (e) {
         e.preventDefault();
         console.log(e);
         await postApi.remove(post.id);
         await handleFilterChange();
+        toast.success('Remove post successfully');
         const modal = document.getElementById('deleteModal');
         if (!modal) return;
         modal.style.display = 'none';
-        toast.success('Remove post successfully');
       });
     } catch (error) {
       console.log('failed to remove post', error);
@@ -96,11 +91,10 @@ function registerPostDeleteEvent() {
     //render post list based on params
     // const queryParams = new URLSearchParams(window.location.search);
 
-    // const { data, pagination } = await postApi.getAll(queryParams);
+    const { data, pagination } = await postApi.getAll(queryParams);
 
-    // renderPostList(data);
-    // renderPagination('pagination', pagination);
-    handleFilterChange();
+    renderPostList(data);
+    renderPagination('pagination', pagination);
   } catch (error) {
     console.log('get all failed', error);
   }
